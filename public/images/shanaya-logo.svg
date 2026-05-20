@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 520" role="img" aria-labelledby="title">
+  <title id="title">Shanaya Enterprises logo</title>
+  <defs>
+    <linearGradient id="shanayaBlue" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f4eb3" />
+      <stop offset="100%" stop-color="#133b8e" />
+    </linearGradient>
+    <linearGradient id="shanayaGreen" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#12b4a6" />
+      <stop offset="100%" stop-color="#0d8e83" />
+    </linearGradient>
+  </defs>
+
+  <g transform="translate(285 32)">
+    <path
+      d="M162 42H92c-28 0-46 15-46 39 0 16 8 28 22 37l28 18c11 7 16 14 16 24 0 17-14 28-35 28H46"
+      fill="none"
+      stroke="url(#shanayaBlue)"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      stroke-width="28"
+    />
+    <path d="M141 52h38" fill="none" stroke="url(#shanayaBlue)" stroke-linecap="round" stroke-width="12" />
+    <path d="M179 52h14" fill="none" stroke="url(#shanayaBlue)" stroke-linecap="round" stroke-width="8" />
+    <circle cx="197" cy="52" r="10" fill="none" stroke="url(#shanayaBlue)" stroke-width="8" />
+
+    <path d="M60 150h-16" fill="none" stroke="url(#shanayaGreen)" stroke-linecap="round" stroke-width="12" />
+    <path d="M60 168h-16" fill="none" stroke="url(#shanayaGreen)" stroke-linecap="round" stroke-width="12" />
+    <rect x="36" y="144" width="20" height="30" rx="6" fill="url(#shanayaGreen)" />
+
+    <path
+      d="M74 126h100l-16 24h-58v18h50l-15 24h-48l-14 14H124l14-14H92l-36-36h18z"
+      fill="url(#shanayaGreen)"
+    />
+  </g>
+
+  <text
+    x="460"
+    y="352"
+    text-anchor="middle"
+    fill="url(#shanayaBlue)"
+    font-family="Arial, Helvetica, sans-serif"
+    font-size="112"
+    font-weight="800"
+    letter-spacing="8"
+  >
+    SHANAYA
+  </text>
+  <text
+    x="460"
+    y="415"
+    text-anchor="middle"
+    fill="url(#shanayaGreen)"
+    font-family="Arial, Helvetica, sans-serif"
+    font-size="56"
+    font-weight="700"
+    letter-spacing="14"
+  >
+    ENTERPRISES
+  </text>
+  <line x1="110" y1="401" x2="210" y2="401" stroke="url(#shanayaGreen)" stroke-width="6" />
+  <line x1="710" y1="401" x2="810" y2="401" stroke="url(#shanayaGreen)" stroke-width="6" />
+  <text
+    x="460"
+    y="470"
+    text-anchor="middle"
+    fill="url(#shanayaBlue)"
+    font-family="Arial, Helvetica, sans-serif"
+    font-size="34"
+    font-weight="700"
+    letter-spacing="10"
+  >
+    SALES • REPAIR • INSTALLATION
+  </text>
+</svg>
