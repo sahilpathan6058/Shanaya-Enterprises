@@ -1,21 +1,27 @@
 import { useState } from 'react'
+import ImageWithFallback from './ImageWithFallback'
 import WhatsAppIcon from './WhatsAppIcon'
 
-const phoneNumber = '+91 9823786438'
-const phoneLink = 'tel:+9823786438'
-const whatsappBaseLink = 'https://wa.me/919823786438'
+const phoneNumber = '+91 9561136564'
+const phoneLink = 'tel:+9561136564'
+const whatsappBaseLink = 'https://wa.me/919561136564'
 
 const initialFormData = {
   name: '',
   phone: '',
   email: '',
-  service: '',
+  requestType: '',
   message: '',
 }
 
-function Contact({ services }) {
+function Contact({ services, selectedProduct, onSubmitRequest, onClearSelectedProduct }) {
   const [formData, setFormData] = useState(initialFormData)
   const [statusMessage, setStatusMessage] = useState('')
+  const suggestedMessage = selectedProduct
+    ? `I am interested in ${selectedProduct.name} (${selectedProduct.category}) priced at ${selectedProduct.price}. Please share availability and delivery details.`
+    : ''
+  const requestTypeValue = formData.requestType || (selectedProduct ? 'Product Enquiry' : '')
+  const messageValue = formData.message || suggestedMessage
 
   const handleChange = (event) => {
     const { name, value } = event.target
@@ -29,21 +35,45 @@ function Contact({ services }) {
   const handleSubmit = (event) => {
     event.preventDefault()
 
+    const requestPayload = {
+      name: formData.name.trim(),
+      phone: formData.phone.trim(),
+      email: formData.email.trim(),
+      requestType: requestTypeValue,
+      message: messageValue.trim(),
+      product: selectedProduct
+        ? {
+            id: selectedProduct.id,
+            name: selectedProduct.name,
+            category: selectedProduct.category,
+            price: selectedProduct.price,
+          }
+        : null,
+    }
+
     const enquiryLines = [
       'New enquiry from Shanaya Enterprises website',
-      `Name: ${formData.name}`,
-      `Phone: ${formData.phone}`,
-      `Email: ${formData.email || 'Not provided'}`,
-      `Service: ${formData.service}`,
-      `Message: ${formData.message}`,
-    ]
+      `Name: ${requestPayload.name}`,
+      `Phone: ${requestPayload.phone}`,
+      `Email: ${requestPayload.email || 'Not provided'}`,
+      `Requirement: ${requestPayload.requestType}`,
+      requestPayload.product
+        ? `Product: ${requestPayload.product.name} | ${requestPayload.product.category} | ${requestPayload.product.price}`
+        : null,
+      `Message: ${requestPayload.message}`,
+    ].filter(Boolean)
 
     const enquiryText = encodeURIComponent(enquiryLines.join('\n'))
 
     window.open(`${whatsappBaseLink}?text=${enquiryText}`, '_blank', 'noopener,noreferrer')
 
-    setStatusMessage('Your enquiry is ready in WhatsApp. Please send the message to complete it.')
+    onSubmitRequest?.(requestPayload)
+
+    setStatusMessage(
+      'Your enquiry is saved for admin follow-up and ready in WhatsApp. Please send the message to complete it.',
+    )
     setFormData(initialFormData)
+    onClearSelectedProduct?.()
   }
 
   return (
@@ -63,7 +93,7 @@ function Contact({ services }) {
               </h2>
 
               <p className="mt-4 text-sm leading-8 text-slate-300">
-                Get in touch for electronics sales guidance, repair requests, dish fitting, water
+                Get in touch for product purchase guidance, repair requests, dish fitting, water
                 filter installation, and dependable local home service support.
               </p>
 
@@ -89,7 +119,8 @@ function Contact({ services }) {
                     Working Hours
                   </p>
                   <p className="mt-2 text-sm font-medium text-white">
-                    Monday to Sunday, 24 X 7 availability for sales, repair, installation, and support services.
+                    Monday to Sunday, 24 X 7 availability for sales, repair, installation, and
+                    support services.
                   </p>
                 </div>
               </div>
@@ -131,11 +162,48 @@ function Contact({ services }) {
               </div>
 
               <p className="max-w-sm text-sm leading-7 text-slate-500">
-                Fill the form and it will open WhatsApp with your enquiry details ready to send.
+                Fill the form to save the request for admin follow-up and open WhatsApp with the
+                details ready to send.
               </p>
             </div>
 
             <form className="mt-8 grid gap-5" onSubmit={handleSubmit}>
+              {selectedProduct ? (
+                <div className="rounded-[1.8rem] border border-[#0f4eb3]/10 bg-[linear-gradient(135deg,#eff6ff_0%,#f0fdfa_100%)] p-4">
+                  <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+                    <div className="flex items-center gap-4">
+                      <div className="h-20 w-20 overflow-hidden rounded-[1.3rem] border border-white/80 bg-white shadow-sm shadow-slate-900/5">
+                        <ImageWithFallback
+                          src={selectedProduct.image}
+                          alt={selectedProduct.name}
+                          className="h-full w-full object-cover"
+                        />
+                      </div>
+
+                      <div>
+                        <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[#0f4eb3]">
+                          Selected Product
+                        </p>
+                        <p className="mt-1 text-lg font-semibold text-slate-900">
+                          {selectedProduct.name}
+                        </p>
+                        <p className="mt-1 text-sm text-slate-600">
+                          {selectedProduct.category} • {selectedProduct.price}
+                        </p>
+                      </div>
+                    </div>
+
+                    <button
+                      type="button"
+                      onClick={onClearSelectedProduct}
+                      className="inline-flex items-center justify-center rounded-full border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-slate-700 transition hover:border-[#0f4eb3]/20 hover:text-[#0f4eb3]"
+                    >
+                      Clear Product
+                    </button>
+                  </div>
+                </div>
+              ) : null}
+
               <div className="grid gap-5 md:grid-cols-2">
                 <label className="grid gap-2 text-sm font-medium text-slate-700">
                   Full Name
@@ -178,15 +246,16 @@ function Contact({ services }) {
                 </label>
 
                 <label className="grid gap-2 text-sm font-medium text-slate-700">
-                  Service Needed
+                  Requirement Type
                   <select
-                    name="service"
-                    value={formData.service}
+                    name="requestType"
+                    value={requestTypeValue}
                     onChange={handleChange}
                     required
                     className="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-[#0f4eb3] focus:bg-white"
                   >
-                    <option value="">Select a service</option>
+                    <option value="">Select requirement type</option>
+                    <option value="Product Enquiry">Product Enquiry</option>
                     {services.map((service) => (
                       <option key={service.id} value={service.title}>
                         {service.title}
@@ -200,7 +269,7 @@ function Contact({ services }) {
                 Your Message
                 <textarea
                   name="message"
-                  value={formData.message}
+                  value={messageValue}
                   onChange={handleChange}
                   required
                   rows="6"
@@ -218,7 +287,8 @@ function Contact({ services }) {
                 </button>
 
                 <p className="text-sm leading-7 text-slate-500">
-                  Static website form: submission opens WhatsApp with prefilled enquiry details.
+                  Static website form: submission saves the request locally for admin review and
+                  opens WhatsApp with prefilled enquiry details.
                 </p>
               </div>
 

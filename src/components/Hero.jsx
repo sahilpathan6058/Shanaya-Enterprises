@@ -1,8 +1,8 @@
 import ImageWithFallback from './ImageWithFallback'
 import WhatsAppIcon from './WhatsAppIcon'
 
-const phoneLink = 'tel:+919404799782'
-const whatsappLink = 'https://wa.me/919404799782'
+const phoneLink = 'tel:+919561136564'
+const whatsappLink = 'https://wa.me/919561136564'
 const heroBackgroundImage =
   'https://images.pexels.com/photos/35278544/pexels-photo-35278544.jpeg?auto=compress&cs=tinysrgb&w=1600'
 
@@ -109,13 +109,7 @@ function Hero() {
 
             <div className="flex items-end justify-end">
               <div className="grid w-full max-w-xl gap-5 lg:pt-8">
-                <div className="ml-auto w-full max-w-[320px] rounded-[1.7rem] border border-white/12 bg-slate-950/78 p-5 text-white shadow-2xl shadow-slate-900/20 backdrop-blur-md">
-                  <p className="text-xs font-semibold uppercase tracking-[0.22em] text-slate-300">
-                    Support Window
-                  </p>
-                  <p className="mt-3 text-3xl font-semibold">9 AM - 9 PM</p>
-                  <p className="mt-2 text-sm leading-7 text-slate-300">Monday to Sunday</p>
-                </div>
+                
 
                 <div className="rounded-[2rem] border border-white/12 bg-slate-950/72 p-6 text-white shadow-2xl shadow-slate-900/20 backdrop-blur-md">
                   <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[#8bd8d0]">

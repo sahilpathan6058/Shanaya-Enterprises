@@ -9,8 +9,8 @@ const navLinks = [
   { label: 'Contact Us', href: '#contact' },
 ]
 
-const phoneLink = 'tel:+919404799782'
-const whatsappLink = 'https://wa.me/919404799782'
+const phoneLink = 'tel:+919561136564'
+const whatsappLink = 'https://wa.me/919561136564'
 
 function MapPinIcon({ className = 'h-4 w-4' }) {
   return (
@@ -67,7 +67,7 @@ function Brand() {
   )
 }
 
-function Navbar({ onProductsClick }) {
+function Navbar({ onProductsClick, onAdminClick }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
 
   const closeMenu = () => {
@@ -80,6 +80,11 @@ function Navbar({ onProductsClick }) {
       onProductsClick()
     }
 
+    closeMenu()
+  }
+
+  const handleAdminClick = () => {
+    onAdminClick?.()
     closeMenu()
   }
 
@@ -107,7 +112,13 @@ function Navbar({ onProductsClick }) {
           </nav>
 
           <div className="hidden items-center gap-3 lg:flex">
-          
+            <button
+              type="button"
+              onClick={handleAdminClick}
+              className="inline-flex items-center justify-center rounded-full border border-slate-200 bg-white px-5 py-2.5 text-sm font-semibold text-slate-700 transition hover:border-[#0f4eb3]/20 hover:text-[#0f4eb3]"
+            >
+              Admin Panel
+            </button>
 
             <a
               href={phoneLink}
@@ -165,6 +176,14 @@ function Navbar({ onProductsClick }) {
                 <MapPinIcon className="h-4 w-4 text-[#12b4a6]" />
                 Rajgurunagar, Pune
               </div>
+
+              <button
+                type="button"
+                onClick={handleAdminClick}
+                className="inline-flex items-center justify-center rounded-full border border-slate-200 bg-white px-4 py-3 text-sm font-semibold text-slate-700 transition hover:border-[#0f4eb3]/20 hover:text-[#0f4eb3]"
+              >
+                Open Admin Panel
+              </button>
 
               <a
                 href={phoneLink}
