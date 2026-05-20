@@ -107,10 +107,7 @@ function Navbar({ onProductsClick }) {
           </nav>
 
           <div className="hidden items-center gap-3 lg:flex">
-            {/* <div className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-slate-50/90 px-4 py-2.5 text-sm font-semibold text-slate-600 shadow-sm shadow-slate-900/[0.03]">
-              <MapPinIcon className="h-4 w-4 text-[#12b4a6]" />
-              Rajgurunagar, Pune
-            </div> */}
+          
 
             <a
               href={phoneLink}
