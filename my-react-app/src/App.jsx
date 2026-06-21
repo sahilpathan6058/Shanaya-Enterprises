@@ -1,34 +1,60 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import Footer from './components/Footer'
+import Navbar from './components/Navbar'
+import ScrollToTop from './components/ScrollToTop'
+import AdminLayout from './components/admin/AdminLayout'
+import ProtectedRoute from './components/admin/ProtectedRoute'
+import { AdminAuthProvider } from './context/AdminAuthContext'
+import AboutPage from './pages/AboutPage'
+import ContactPage from './pages/ContactPage'
+import DishTvPage from './pages/DishTvPage'
+import GalleryPage from './pages/GalleryPage'
+import HomePage from './pages/HomePage'
+import ProductDetailPage from './pages/ProductDetailPage'
+import ProductsPage from './pages/ProductsPage'
+import ServicesPage from './pages/ServicesPage'
+import AdminDashboardPage from './pages/admin/AdminDashboardPage'
+import AdminLoginPage from './pages/admin/AdminLoginPage'
+import AdminProductsPage from './pages/admin/AdminProductsPage'
+import AdminRequestsPage from './pages/admin/AdminRequestsPage'
+
+function PublicLayout() {
+  return (
+    <div className="min-h-screen bg-white text-slate-900">
+      <ScrollToTop />
+      <Navbar />
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/services" element={<ServicesPage />} />
+        <Route path="/dish-tv" element={<DishTvPage />} />
+        <Route path="/products" element={<ProductsPage />} />
+        <Route path="/products/:productId" element={<ProductDetailPage />} />
+        <Route path="/gallery" element={<GalleryPage />} />
+        <Route path="/about" element={<AboutPage />} />
+        <Route path="/contact" element={<ContactPage />} />
+      </Routes>
+      <Footer />
+    </div>
+  )
+}
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    <BrowserRouter>
+      <AdminAuthProvider>
+        <Routes>
+          <Route path="/admin/login" element={<AdminLoginPage />} />
+          <Route element={<ProtectedRoute />}>
+            <Route path="/admin" element={<AdminLayout />}>
+              <Route index element={<AdminDashboardPage />} />
+              <Route path="products" element={<AdminProductsPage />} />
+              <Route path="requests" element={<AdminRequestsPage />} />
+            </Route>
+          </Route>
+          <Route path="/*" element={<PublicLayout />} />
+        </Routes>
+      </AdminAuthProvider>
+    </BrowserRouter>
   )
 }
 

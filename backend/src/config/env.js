@@ -10,6 +10,9 @@ const env = {
   port: Number(process.env.PORT) || 5000,
   mongodbUri: process.env.MONGODB_URI,
   clientOrigin: process.env.CLIENT_ORIGIN || 'http://localhost:5173',
+  jwtSecret: process.env.JWT_SECRET || 'dev-jwt-secret-change-in-production',
+  adminEmail: process.env.ADMIN_EMAIL || 'admin@shanayacare.local',
+  adminPassword: process.env.ADMIN_PASSWORD || 'admin123',
 }
 
 if (!env.mongodbUri) {

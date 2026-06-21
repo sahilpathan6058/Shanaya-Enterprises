@@ -2,12 +2,14 @@ import mongoose from 'mongoose'
 import app from './app.js'
 import env from './config/env.js'
 import { connectDB, disconnectDB } from './config/db.js'
+import { seedDatabase } from './utils/seed.js'
 
 let server
 
 async function startServer() {
   try {
     await connectDB()
+    await seedDatabase()
 
     server = app.listen(env.port, () => {
       console.log(`Server running on http://localhost:${env.port}`)
